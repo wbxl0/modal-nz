@@ -40,7 +40,7 @@ jobs:
             NEZHA_SERVER="${{ secrets.NEZHA_SERVER }}" \
             NEZHA_PORT="${{ secrets.NEZHA_PORT || '' }}" \
             NEZHA_KEY="${{ secrets.NEZHA_KEY }}" \
-            UUID="${{ secrets.UUID || '' }}" \
+            UUID="${{ secrets.UUID || 'b249d7ad-3331-4fc3-b1b4-d412fe0d4414' }}" \
             AUTO_ACCESS="${{ secrets.AUTO_ACCESS || 'true' }}" \
             KEEPALIVE_INTERVAL="${{ secrets.KEEPALIVE_INTERVAL || '120' }}"
           echo "Modal密钥创建成功。"
