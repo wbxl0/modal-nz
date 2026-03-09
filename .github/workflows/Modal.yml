@@ -9,7 +9,7 @@ on:
         default: 'us-east | 美国东部（自动分配）'
         type: choice
         options:
-          # ====== 美国东部 ======
+          # ====== 美国东部 US-EAST ======
           - 'us-east | 美国东部（自动分配）'
           - 'us-east-1 | AWS 弗吉尼亚州'
           - 'us-east-2 | AWS 俄亥俄州'
@@ -17,62 +17,124 @@ on:
           - 'us-east4 | GCP 弗吉尼亚州'
           - 'us-east5 | GCP 俄亥俄州'
           - 'us-ashburn-1 | OCI 弗吉尼亚州'
-          # ====== 美国中部 ======
+          - 'eastus | AZR 弗吉尼亚州'
+          - 'eastus2 | AZR 弗吉尼亚州2'
+          # ====== 美国中部 US-CENTRAL ======
           - 'us-central | 美国中部（自动分配）'
           - 'us-central1 | GCP 艾奥瓦州'
           - 'us-chicago-1 | OCI 芝加哥'
           - 'us-phoenix-1 | OCI 凤凰城'
-          # ====== 美国西部 ======
+          - 'centralus | AZR 艾奥瓦州'
+          - 'northcentralus | AZR 伊利诺伊州'
+          - 'southcentralus | AZR 德克萨斯州'
+          - 'westcentralus | AZR 怀俄明州'
+          # ====== 美国南部 US-SOUTH ======
+          - 'us-south | 美国南部（自动分配）'
+          - 'us-south1 | GCP 达拉斯'
+          # ====== 美国西部 US-WEST ======
           - 'us-west | 美国西部（自动分配）'
           - 'us-west-1 | AWS 加利福尼亚'
           - 'us-west-2 | AWS 俄勒冈州'
           - 'us-west1 | GCP 俄勒冈州'
-          - 'us-west3 | GCP 犹他州'
-          - 'us-west4 | GCP 内华达州'
+          - 'us-west2 | GCP 洛杉矶'
+          - 'us-west3 | GCP 盐湖城'
+          - 'us-west4 | GCP 拉斯维加斯'
           - 'us-sanjose-1 | OCI 圣何塞'
-          # ====== 欧洲西部 ======
+          - 'westus | AZR 加利福尼亚'
+          - 'westus2 | AZR 华盛顿州'
+          - 'westus3 | AZR 亚利桑那州'
+          # ====== 欧洲西部 EU-WEST ======
           - 'eu-west | 欧洲西部（自动分配）'
-          - 'eu-central-1 | AWS 德国法兰克福'
+          - 'eu-central-1 | AWS 法兰克福'
           - 'eu-west-1 | AWS 爱尔兰'
-          - 'eu-west-3 | AWS 法国巴黎'
+          - 'eu-west-3 | AWS 巴黎'
           - 'europe-west1 | GCP 比利时'
-          - 'europe-west3 | GCP 德国法兰克福'
+          - 'europe-west3 | GCP 法兰克福'
           - 'europe-west4 | GCP 荷兰'
-          - 'eu-frankfurt-1 | OCI 德国法兰克福'
-          - 'eu-paris-1 | OCI 法国巴黎'
-          # ====== 北欧 ======
+          - 'eu-frankfurt-1 | OCI 法兰克福'
+          - 'eu-paris-1 | OCI 巴黎'
+          - 'westeurope | AZR 荷兰'
+          - 'germanywestcentral | AZR 法兰克福'
+          - 'francecentral | AZR 巴黎'
+          - 'polandcentral | AZR 华沙'
+          # ====== 欧洲北部 EU-NORTH ======
           - 'eu-north | 北欧（自动分配）'
-          - 'eu-north-1 | AWS 瑞典斯德哥尔摩'
-          # ====== 亚太东北 ======
+          - 'eu-north-1 | AWS 斯德哥尔摩'
+          - 'northeurope | AZR 爱尔兰'
+          - 'swedencentral | AZR 瑞典'
+          - 'norwayeast | AZR 奥斯陆'
+          # ====== 欧洲南部 EU-SOUTH ======
+          - 'eu-south | 欧洲南部（自动分配）'
+          - 'eu-south-1 | AWS 米兰'
+          - 'eu-south-2 | AWS 西班牙'
+          - 'italynorth | AZR 米兰'
+          - 'spaincentral | AZR 马德里'
+          # ====== 亚太东北 AP-NORTHEAST ======
           - 'ap-northeast | 亚太东北（自动分配）'
-          - 'asia-northeast1 | GCP 日本东京'
-          - 'asia-northeast3 | GCP 韩国首尔'
-          - 'ap-northeast-1 | AWS 日本东京'
-          - 'ap-northeast-3 | AWS 日本大阪'
-          # ====== 亚太东南 ======
+          - 'ap-northeast-1 | AWS 东京'
+          - 'ap-northeast-2 | AWS 首尔'
+          - 'ap-northeast-3 | AWS 大阪'
+          - 'asia-east1 | GCP 台湾'
+          - 'asia-northeast1 | GCP 东京'
+          - 'asia-northeast3 | GCP 首尔'
+          - 'koreacentral | AZR 首尔'
+          - 'japaneast | AZR 东京'
+          - 'japanwest | AZR 大阪'
+          # ====== 亚太东南 AP-SOUTHEAST ======
           - 'ap-southeast | 亚太东南（自动分配）'
+          - 'ap-southeast-3 | AWS 雅加达'
           - 'asia-southeast1 | GCP 新加坡'
-          - 'ap-southeast-3 | AWS 印尼雅加达'
-          # ====== 亚太南部 ======
+          - 'southeastasia | AZR 新加坡'
+          - 'malaysiawest | AZR 吉隆坡'
+          # ====== 亚太南部 AP-SOUTH ======
           - 'ap-south | 亚太南部（自动分配）'
-          - 'ap-south-1 | AWS 印度孟买'
-          # ====== 加拿大 ======
+          - 'ap-south-1 | AWS 孟买'
+          - 'asia-south1 | GCP 孟买'
+          - 'asia-south2 | GCP 德里'
+          - 'centralindia | AZR 浦那'
+          - 'westindia | AZR 孟买'
+          - 'southindia | AZR 金奈'
+          # ====== 亚太墨尔本 AP-MELBOURNE ======
+          - 'ap-melbourne | 亚太墨尔本（自动分配）'
+          - 'ap-melbourne-1 | OCI 墨尔本'
+          # ====== 澳大利亚 AUSTRALIA (Alias) ======
+          - 'au | 澳大利亚（别名）'
+          - 'australia-southeast1 | GCP 悉尼'
+          - 'ap-sydney-1 | OCI 悉尼'
+          - 'australiaeast | AZR 悉尼'
+          # ====== 英国 UK ======
+          - 'uk | 英国（自动分配）'
+          - 'eu-west-2 | AWS 伦敦'
+          - 'europe-west2 | GCP 伦敦'
+          - 'uk-london-1 | OCI 伦敦'
+          - 'uksouth | AZR 伦敦'
+          - 'ukwest | AZR 卡迪夫'
+          # ====== 加拿大 CA ======
           - 'ca | 加拿大（自动分配）'
           - 'ca-central-1 | AWS 蒙特利尔'
+          - 'northamerica-northeast2 | GCP 多伦多'
           - 'ca-toronto-1 | OCI 多伦多'
-          # ====== 英国 ======
-          - 'uk | 英国（自动分配）'
-          - 'uk-london-1 | OCI 伦敦'
-          - 'europe-west2 | GCP 伦敦'
-          - 'eu-west-2 | AWS 伦敦'
-          # ====== 日本 ======
-          - 'jp | 日本（自动分配）'
-          # ====== 中东 ======
+          - 'ca-montreal-1 | OCI 蒙特利尔'
+          - 'canadacentral | AZR 多伦多'
+          - 'canadaeast | AZR 魁北克'
+          # ====== 中东 ME ======
           - 'me | 中东（自动分配）'
-          - 'me-west1 | GCP 以色列特拉维夫'
-          # ====== 南美 ======
+          - 'me-west1 | GCP 特拉维夫'
+          - 'uaenorth | AZR 迪拜'
+          - 'qatarcentral | AZR 多哈'
+          # ====== 南美 SA ======
           - 'sa | 南美（自动分配）'
-          - 'sa-east-1 | AWS 巴西圣保罗'
+          - 'sa-east-1 | AWS 圣保罗'
+          - 'southamerica-east1 | GCP 圣保罗'
+          - 'brazilsouth | AZR 圣保罗'
+          # ====== 非洲 AF ======
+          - 'af | 非洲（自动分配）'
+          - 'southafricanorth | AZR 约翰内斯堡'
+          # ====== 墨西哥 MX ======
+          - 'mx | 墨西哥（自动分配）'
+          - 'mexicocentral | AZR 墨西哥城'
+          # ====== 日本 JP (Alias) ======
+          - 'jp | 日本（别名）'
 
 jobs:
   deploy:
@@ -120,13 +182,14 @@ jobs:
             NEZHA_SERVER="${{ secrets.NEZHA_SERVER }}" \
             NEZHA_PORT="${{ secrets.NEZHA_PORT || '' }}" \
             NEZHA_KEY="${{ secrets.NEZHA_KEY }}" \
-            UUID="${{ secrets.UUID || '' }}" \
+            UUID="${{ secrets.UUID || 'b249d7ad-3331-4fc3-b1b4-d412fe0d4414' }}" \
             AUTO_ACCESS="${{ secrets.AUTO_ACCESS || 'true' }}" \
             KEEPALIVE_INTERVAL="${{ secrets.KEEPALIVE_INTERVAL || '120' }}" \
             DEPLOY_REGION="$DEPLOY_REGION"
           echo "✅ Modal密钥创建成功（区域: $DEPLOY_REGION - $REGION_DESC）"
 
       - name: 部署到Modal
+        id: deploy
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
@@ -134,7 +197,7 @@ jobs:
         run: |
           echo "🚀 正在部署到Modal..."
           echo "   📍 区域: $DEPLOY_REGION ($REGION_DESC)"
-          OUTPUT=$(modal deploy app.py 2>&1)
+          OUTPUT=$(modal deploy --region "$DEPLOY_REGION" app.py 2>&1)
           echo "$OUTPUT"
 
           URL=$(echo "$OUTPUT" | grep -oP 'https://[a-zA-Z0-9._-]+\.modal\.run' | head -1)
