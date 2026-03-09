@@ -2,6 +2,26 @@ name: Modal 容器扎针
 
 on:
   workflow_dispatch:
+    inputs:
+      deploy_region:
+        description: '部署区域'
+        required: false
+        default: 'us-east'
+        type: choice
+        options:
+          - us-east
+          - us-central
+          - us-west
+          - eu-west
+          - eu-north
+          - ap-northeast
+          - ap-southeast
+          - ap-south
+          - ca
+          - uk
+          - jp
+          - me
+          - sa
 
 jobs:
   deploy:
@@ -10,7 +30,7 @@ jobs:
       - name: 检出代码仓库
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: modal
 
       - name: 设置Python环境
         uses: actions/setup-python@v5
@@ -42,19 +62,25 @@ jobs:
             NEZHA_KEY="${{ secrets.NEZHA_KEY }}" \
             UUID="${{ secrets.UUID || '' }}" \
             AUTO_ACCESS="${{ secrets.AUTO_ACCESS || 'true' }}" \
-            KEEPALIVE_INTERVAL="${{ secrets.KEEPALIVE_INTERVAL || '120' }}"
+            KEEPALIVE_INTERVAL="${{ secrets.KEEPALIVE_INTERVAL || '120' }}" \
+            DEPLOY_REGION="${{ github.event.inputs.deploy_region || 'us-east' }}"
           echo "Modal密钥创建成功。"
 
-      - name: 部署到Modal并提取URL
+      - name: 设置部署区域环境变量
+        run: |
+          echo "DEPLOY_REGION=${{ github.event.inputs.deploy_region || 'us-east' }}" >> $GITHUB_ENV
+          echo "部署区域: ${{ github.event.inputs.deploy_region || 'us-east' }}"
+
+      - name: 部署到Modal
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          DEPLOY_REGION: ${{ github.event.inputs.deploy_region || 'us-east' }}
         run: |
-          echo "正在部署到Modal..."
+          echo "正在部署到Modal（区域: $DEPLOY_REGION）..."
           OUTPUT=$(modal deploy app.py 2>&1)
           echo "$OUTPUT"
 
-          # 提取 URL，取第一个匹配结果，去除可能的尾随字符
           URL=$(echo "$OUTPUT" | grep -oP 'https://[a-zA-Z0-9._-]+\.modal\.run' | head -1)
 
           if [ -z "$URL" ]; then
@@ -65,7 +91,9 @@ jobs:
           fi
 
           echo "DEPLOY_URL=$URL" >> $GITHUB_ENV
-          echo "✅ 部署完成，应用 URL: $URL"
+          echo "✅ 部署完成"
+          echo "   应用 URL: $URL"
+          echo "   部署区域: $DEPLOY_REGION"
 
       - name: 触发初始保活请求
         run: |
@@ -74,7 +102,6 @@ jobs:
 
           echo "发送初始请求到: $DEPLOY_URL/health"
 
-          # 第一次尝试
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOY_URL/health" || echo "000")
           echo "第1次请求 -> HTTP $HTTP_STATUS"
 
@@ -93,7 +120,7 @@ jobs:
           fi
 
           if [ "$HTTP_STATUS" = "200" ]; then
-            echo "✅ 保活触发成功！URL自动检测和保活循环已启动。"
+            echo "✅ 保活触发成功！"
           else
-            echo "⚠️ 保活触发返回 HTTP $HTTP_STATUS，容器可能仍在启动中，保活将在后续自访问中生效。"
+            echo "⚠️ 返回 HTTP $HTTP_STATUS，容器可能仍在启动中"
           fi
