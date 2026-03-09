@@ -683,10 +683,11 @@ async def restart_agent():
     }
     return Response(content=json.dumps(data), media_type="application/json")
 
-# ========== Modal 入口（正确配置区域和新参数）==========
-primary_region = DEPLOY_REGION  # 从环境变量读取，如 "asia-east1"
-# 可选：添加备用区域，提高调度成功率（若首选区域资源不足）
-fallback_regions = ['us-east', 'eu-west', 'ap-northeast']  # 根据需要调整
+# ========== Modal 入口（正确指定区域）==========
+# 从环境变量读取用户选择的区域，构建候选列表
+primary_region = os.environ.get('DEPLOY_REGION', 'us-east')
+# 备用区域（当首选区域资源不足时自动尝试）
+fallback_regions = ['us-east', 'eu-west', 'ap-northeast', 'us-west']
 candidate_regions = []
 for r in [primary_region] + fallback_regions:
     if r not in candidate_regions:
@@ -694,10 +695,10 @@ for r in [primary_region] + fallback_regions:
 
 @app.function(
     secrets=[modal.Secret.from_name("nezha-secrets")],
-    scaledown_window=300,
-    region=candidate_regions,
+    scaledown_window=300,                # 原 container_idle_timeout
+    region=candidate_regions,             # ✅ 关键：指定区域列表（首选 asia-east1）
 )
-@modal.concurrent(max_inputs=10)
+@modal.concurrent(max_inputs=10)          # ✅ 新装饰器替代 allow_concurrent_inputs
 @modal.asgi_app()
 def fastapi_app():
     return web_app
