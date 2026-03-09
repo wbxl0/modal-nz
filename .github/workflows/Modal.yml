@@ -188,7 +188,7 @@ jobs:
             DEPLOY_REGION="$DEPLOY_REGION"   # 将区域注入 secret
           echo "✅ Modal密钥创建成功（区域: $DEPLOY_REGION - $REGION_DESC）"
 
-      - name: 部署到Modal（无 --region 参数）
+      - name: 部署到Modal
         id: deploy
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
