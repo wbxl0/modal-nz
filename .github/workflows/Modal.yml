@@ -10,7 +10,7 @@ jobs:
       - name: 检出代码仓库
         uses: actions/checkout@v4
         with:
-          ref: main  # app.py文件所在的分支
+          ref: modal
 
       - name: 设置Python环境
         uses: actions/setup-python@v5
@@ -33,13 +33,8 @@ jobs:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: |
-          # 删除旧 secret，用 echo y 自动确认
           echo y | modal secret delete nezha-secrets 2>/dev/null || true
-
-          # 等待删除完成
           sleep 2
-
-          # 创建新 secret（PROJECT_URL 无需配置，会自动检测）
           modal secret create nezha-secrets \
             FILE_PATH="${{ secrets.FILE_PATH || '.cache' }}" \
             NEZHA_SERVER="${{ secrets.NEZHA_SERVER }}" \
@@ -50,14 +45,23 @@ jobs:
             KEEPALIVE_INTERVAL="${{ secrets.KEEPALIVE_INTERVAL || '120' }}"
           echo "Modal密钥创建成功。"
 
-      - name: 部署到Modal
+      - name: 部署到Modal并提取URL
+        id: deploy
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: |
           echo "正在部署到Modal..."
-          modal deploy app.py
-          echo "部署完成。"
+          OUTPUT=$(modal deploy app.py)
+          echo "$OUTPUT"
+          # 提取 URL（匹配 https:// 开头，.modal.run 结尾的字符串）
+          URL=$(echo "$OUTPUT" | grep -oP 'https://[^\s]+\.modal\.run')
+          if [ -z "$URL" ]; then
+            echo "错误：无法从部署输出中提取 URL"
+            exit 1
+          fi
+          echo "DEPLOY_URL=$URL" >> $GITHUB_ENV
+          echo "部署完成，应用 URL: $URL"
 
       - name: 触发初始保活请求
         run: |
@@ -65,5 +69,5 @@ jobs:
           sleep 10
           echo "发送初始请求以触发URL自动检测..."
           curl -s -o /dev/null -w "HTTP Status: %{http_code}\n" \
-            "https://boosoyz--nezha-fastapi-app-fastapi-app.modal.run/health" || true
+            "${{ env.DEPLOY_URL }}/health" || true
           echo "初始保活触发完成。"
