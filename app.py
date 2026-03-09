@@ -22,7 +22,7 @@ image = modal.Image.debian_slim().pip_install(
     "uvicorn",
 )
 
-app = modal.App("nezha-fastapi-app", image=image)
+app = modal.App("fastapi", image=image)
 
 # ========== FastAPI 实例 ==========
 web_app = FastAPI(
