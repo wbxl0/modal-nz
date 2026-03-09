@@ -684,8 +684,8 @@ async def restart_agent():
     return Response(content=json.dumps(data), media_type="application/json")
 
 # ========== Modal 入口（正确配置区域和新参数）==========
-primary_region = DEPLOY_REGION  # 从环境变量读取用户选择的区域
-# 可选：添加备用区域，提高调度成功率
+primary_region = DEPLOY_REGION  # 从环境变量读取，如 "asia-east1"
+# 可选：添加备用区域，提高调度成功率（若首选区域资源不足）
 fallback_regions = ['us-east', 'eu-west', 'ap-northeast']  # 根据需要调整
 candidate_regions = []
 for r in [primary_region] + fallback_regions:
