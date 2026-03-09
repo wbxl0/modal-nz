@@ -152,7 +152,7 @@ jobs:
       - name: 检出代码仓库
         uses: actions/checkout@v4
         with:
-          ref: modal
+          ref: main  # 分支
 
       - name: 设置Python环境
         uses: actions/setup-python@v5
