@@ -44,160 +44,174 @@ FAKE_HTML = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oracle Cloud Infrastructure</title>
+    <title>GreenGuard | Protect Our Forests</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* General Styles */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .container {
-            background: white;
-            border-radius: 16px;
-            padding: 48px;
-            max-width: 580px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            text-align: center;
-        }
-        .logo {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 16px;
-            margin: 0 auto 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .logo svg { width: 36px; height: 36px; fill: white; }
-        h1 {
-            font-size: 24px;
-            color: #1a1a2e;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-        .subtitle {
-            color: #6b7280;
-            font-size: 15px;
-            margin-bottom: 32px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
             line-height: 1.6;
+            color: #333;
+            background-color: #f4f9f4;
         }
-        .status-grid {
+
+        /* Navigation */
+        nav {
+            background: #1a4314;
+            color: #fff;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Section */
+        header {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+        }
+
+        .btn {
+            background: #2e7d32;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #1b5e20;
+        }
+
+        /* Content Sections */
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 4rem 0;
+        }
+
+        .grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
-        .status-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 20px 16px;
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
         }
-        .status-card .icon { font-size: 28px; margin-bottom: 8px; }
-        .status-card .label {
-            font-size: 12px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
+
+        .card h3 {
+            color: #2e7d32;
         }
-        .status-card .value {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1e293b;
+
+        /* Call to Action Section */
+        .cta {
+            background: #e8f5e9;
+            text-align: center;
+            padding: 4rem 20px;
         }
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #ecfdf5;
-            color: #059669;
-            padding: 8px 20px;
-            border-radius: 24px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 24px;
+
+        /* Footer */
+        footer {
+            background: #1a4314;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
         }
-        .status-badge .dot {
-            width: 8px;
-            height: 8px;
-            background: #059669;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            .container { width: 90%; }
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-        .footer {
-            color: #9ca3af;
-            font-size: 13px;
-            line-height: 1.8;
-        }
-        .divider { height: 1px; background: #e5e7eb; margin: 24px 0; }
-        .tech-stack {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-top: 16px;
-        }
-        .tech-item { font-size: 12px; color: #9ca3af; }
     </style>
 </head>
 <body>
+
+    <nav>
+        <div class="logo">🌲 GREENGUARD</div>
+        <div>
+            <small>Protecting the Lungs of the Earth</small>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Stop Deforestation</h1>
+        <p>Every tree cut down is a breath lost. Join our mission to end illegal logging and restore the world's green heart.</p>
+        <a href="#act" class="btn">Take Action Now</a>
+    </header>
+
     <div class="container">
-        <div class="logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
-            </svg>
-        </div>
-        <h1>Cloud Services Platform</h1>
-        <p class="subtitle">Enterprise-grade cloud infrastructure powering your applications with high availability and global reach.</p>
-        <div class="status-badge">
-            <span class="dot"></span>
-            All Systems Operational
-        </div>
-        <div class="status-grid">
-            <div class="status-card">
-                <div class="icon">⚡</div>
-                <div class="label">Uptime</div>
-                <div class="value">99.97%</div>
+        <h2 style="text-align: center; margin-bottom: 3rem;">Why It Matters</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Biodiversity</h3>
+                <p>Forests are home to over 80% of terrestrial species. When we destroy forests, we destroy homes.</p>
             </div>
-            <div class="status-card">
-                <div class="icon">🌍</div>
-                <div class="label">Regions</div>
-                <div class="value">12 Active</div>
+            <div class="card">
+                <h3>Climate Control</h3>
+                <p>Trees absorb CO2. Massive logging accelerates global warming and disrupts weather patterns.</p>
             </div>
-            <div class="status-card">
-                <div class="icon">🔒</div>
-                <div class="label">Security</div>
-                <div class="value">TLS 1.3</div>
-            </div>
-            <div class="status-card">
-                <div class="icon">📊</div>
-                <div class="label">Latency</div>
-                <div class="value">&lt;50ms</div>
-            </div>
-        </div>
-        <div class="divider"></div>
-        <div class="footer">
-            <p>&copy; 2025 Cloud Services Platform. All rights reserved.</p>
-            <p>Powered by distributed cloud architecture</p>
-            <div class="tech-stack">
-                <span class="tech-item">Kubernetes</span>
-                <span class="tech-item">Docker</span>
-                <span class="tech-item">Terraform</span>
-                <span class="tech-item">gRPC</span>
+            <div class="card">
+                <h3>Clean Air & Water</h3>
+                <p>Forests act as natural filters for our air and stabilize water cycles for millions of people.</p>
             </div>
         </div>
     </div>
+
+    <section class="cta" id="act">
+        <h2>How Can You Help?</h2>
+        <p>Small changes lead to big impacts. Here is how you can say "No" to logging today:</p>
+        <ul style="list-style: none; padding: 0; font-weight: 500;">
+            <li>✅ Use recycled paper and wood products.</li>
+            <li>✅ Support brands with "FSC Certified" labels.</li>
+            <li>✅ Donate to reforestation projects.</li>
+            <li>✅ Spread awareness on social media.</li>
+        </ul>
+        <a href="mailto:info@greenguard.org" class="btn">Get Involved</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 GreenGuard Initiative. All rights reserved.</p>
+        <p>Built with ❤️ for the Planet.</p>
+    </footer>
+
 </body>
 </html>"""
 
