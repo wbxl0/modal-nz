@@ -4,8 +4,8 @@
 
 | Secret 名称 | 是否必填 | 默认值 | 说明 |
 | :--- | :---: | :---: | :--- |
-| `MODAL_TOKEN_ID` | **是** | 无 | Modal 令牌 ID，从 [Modal 仪表盘](https://modal.com/settings) 获取 |
-| `MODAL_TOKEN_SECRET` | **是** | 无 | Modal 令牌密钥 |
+| `MODAL_TOKEN_ID` | **是** | 无 | Modal 令牌ID ak-xxxxx 开头的一串字符,获取从[Modal 仪表盘](https://modal.com/settings) |
+| `MODAL_TOKEN_SECRET` | **是** | 无 | Modal 令牌密钥 as-xxxxx 开头的一串字符 |
 | `NEZHA_SERVER` | **是** | 无 | 哪吒v1填写形式: nezha.loc.cc:8008  哪吒v0填写形式：nezha.loc.cc |
 | `NEZHA_KEY` | **是** | 无 | 哪吒v1的NZ_CLIENT_SECRET或哪吒v0的agent密钥 |
 | `UUID` | **V1必填** | 空 | 使用哪吒v1,在不同的平台运行需修改UUID,否则会覆盖 |
