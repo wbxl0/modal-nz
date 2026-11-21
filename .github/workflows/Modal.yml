@@ -290,17 +290,18 @@ jobs:
 
       - name: 创建或更新Modal密钥
         run: |
-          echo y | modal secret delete nezha-secrets 2>/dev/null || true
-          sleep 2
-          modal secret create nezha-secrets \
-            FILE_PATH="${{ secrets.FILE_PATH || '.cache' }}" \
-            NEZHA_SERVER="$RESOLVED_NEZHA_SERVER" \
-            NEZHA_PORT="$RESOLVED_NEZHA_PORT" \
-            NEZHA_KEY="$RESOLVED_NEZHA_KEY" \
-            UUID="${RESOLVED_UUID:-b249d7ad-3331-4fc3-b1b4-d412fe0d4414}" \
-            AUTO_ACCESS="${{ secrets.AUTO_ACCESS || 'true' }}" \
-            KEEPALIVE_INTERVAL="${{ secrets.KEEPALIVE_INTERVAL || '120' }}" \
-            DEPLOY_REGION="$DEPLOY_REGION"
+          # modal 的删除确认不读 stdin（echo y 无效），改用 create --force 幂等覆盖
+          ARGS=()
+          add_kv() { [ -n "$2" ] && ARGS+=("$1=$2"); return 0; }
+          add_kv FILE_PATH "${{ secrets.FILE_PATH || '.cache' }}"
+          add_kv NEZHA_SERVER "$RESOLVED_NEZHA_SERVER"
+          add_kv NEZHA_PORT "$RESOLVED_NEZHA_PORT"
+          add_kv NEZHA_KEY "$RESOLVED_NEZHA_KEY"
+          add_kv UUID "${RESOLVED_UUID:-b249d7ad-3331-4fc3-b1b4-d412fe0d4414}"
+          add_kv AUTO_ACCESS "${{ secrets.AUTO_ACCESS || 'true' }}"
+          add_kv KEEPALIVE_INTERVAL "${{ secrets.KEEPALIVE_INTERVAL || '120' }}"
+          add_kv DEPLOY_REGION "$DEPLOY_REGION"
+          modal secret create --force nezha-secrets "${ARGS[@]}"
           echo "✅ Modal密钥创建成功（区域: $DEPLOY_REGION - $REGION_DESC）"
 
       - name: 部署到Modal
